@@ -1,0 +1,55 @@
+# Coocaa / Skyworth 24" FHD Google TV (model SWTV-24AE-FHD, device beomil, MediaTek), Vietnam
+# Google TV / Android 14 (SDK 34), firmware UKN6.260116.048, about 1 GB RAM
+# Vendor packages are named com.smartdevice.*, com.skyworth.* and com.coocaa.* (Coolita heritage).
+#
+# Apply:   TV_HOST=<tv ip> tools/disable.sh examples/coocaa-skyworth-beomil/debloat.txt
+# Undo:    TV_HOST=<tv ip> tools/restore.sh examples/coocaa-skyworth-beomil/debloat.txt com.google.android.apps.tv.launcherx
+# Everything is DISABLED, not uninstalled. Comment out any line you want to keep.
+#
+# Stock launcher: com.google.android.apps.tv.launcherx (pass it to restore.sh, the default is wrong here).
+# Live TV / HDMI app: com.mediatek.wwtv.tvcenter (set live_tv_package to it in config.xml).
+# Keep all com.mediatek.* packages, com.smartdevice.global.service (remote BLE pairing, remote
+# battery, global keys, quick menu), com.smartdevice.factory (panel and hotel services that run at
+# boot), com.smartdevice.myapp (target of the remote's Apps key), com.smartdevice.dailyshortcut and
+# com.smartdevice.dailymanage (purpose unclear, left alone).
+# Already disabled at the factory: com.cltv.hybrid (iWedia "Canali TV" channel app).
+#
+# Known quirks on this firmware:
+# - With launcherx enabled, Home keeps opening it even after set-home-activity and the HOME role
+#   point at launcher/ (launcherx's HOME filter has priority 2). Shell may not disable single
+#   components, so the whole package has to go.
+# - Disabling launcherx makes setupwraith show a full-screen RecoveryActivity ("something went
+#   wrong"). Disabling setupwraith too (listed below) fixes it. Re-enable both before a factory reset.
+# - The Wi-Fi link drops for ~30 s right after launcherx is disabled; ADB reconnects on its own.
+# - screencap returns an empty file (SurfaceFlinger "FB is protected") while HDMI or Live TV is on
+#   screen. Press Home first.
+
+# Skyworth / Coocaa content, ads and promos
+com.smartdevice.recommendation               # Coolita channel recommendation rows on the home screen
+com.smartdevice.leanbacklauncher.customizer  # vendor tweaks to the Google TV home rows
+
+# Retail demo, activation tracking, service tools
+fusion.android.tv.demo                       # store demo mode, market info, starts at boot
+com.smartdevice.recordactivation             # first-activation recording
+com.smartdevice.aftersale                    # after-sales service menu, silent APK installer, runs at boot
+com.Smartdevice.emanual                      # e-manual
+
+# Google extras
+com.google.android.feedback
+com.google.android.marvin.talkback
+com.google.android.play.games
+com.google.android.apps.tv.dreamx            # ambient mode screensaver (see TCL quirk: switch to dreams.basic)
+
+# Needed once launcher/ replaces the stock home (see quirks above). launcherx itself is disabled by
+# launcher/build-and-install with -StockLauncher com.google.android.apps.tv.launcherx.
+com.google.android.tungsten.setupwraith      # Google TV setup wizard and its launcher-missing recovery screen
+
+# Off by choice on this unit (comment out to keep)
+com.google.android.apps.mediashell           # Chromecast built-in
+com.smartdevice.dtv.icast                    # Coocaa screen mirroring: AirPlay, DLNA, Miracast (has analytics SDK)
+com.google.android.youtube.tvmusic
+com.spotify.tv.android
+net.fptplay.ottbox                           # FPT Play
+vn.vtv.vtvgotv                               # VTVgo
+com.tencent.qqlivei18n                       # WeTV
+com.tcl.browser                              # BrowseHere (user app, can also be uninstalled)
