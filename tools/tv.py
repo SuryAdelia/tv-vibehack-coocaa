@@ -15,6 +15,10 @@ from adb_shell.adb_device import AdbDeviceTcp
 from adb_shell.auth.keygen import keygen
 from adb_shell.auth.sign_pythonrsa import PythonRSASigner
 
+# TV output can hold any language (device names, Wi-Fi names); Windows consoles default to cp1252.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 HOST = os.environ.get("TV_HOST")
 PORT = int(os.environ.get("TV_PORT", "5555"))
 if not HOST:

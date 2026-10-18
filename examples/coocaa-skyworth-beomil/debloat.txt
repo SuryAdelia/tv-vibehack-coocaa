@@ -10,8 +10,8 @@
 # Live TV / HDMI app: com.mediatek.wwtv.tvcenter (set live_tv_package to it in config.xml).
 # Keep all com.mediatek.* packages, com.smartdevice.global.service (remote BLE pairing, remote
 # battery, global keys, quick menu), com.smartdevice.factory (panel and hotel services that run at
-# boot), com.smartdevice.myapp (target of the remote's Apps key), com.smartdevice.dailyshortcut and
-# com.smartdevice.dailymanage (purpose unclear, left alone).
+# boot), com.smartdevice.myapp (target of the remote's Apps key) and com.smartdevice.dailyshortcut
+# ("Daily Key": shortcut keys, meeting mode, remote battery warnings; left alone).
 # Already disabled at the factory: com.cltv.hybrid (iWedia "Canali TV" channel app).
 #
 # Known quirks on this firmware:
@@ -33,11 +33,13 @@ fusion.android.tv.demo                       # store demo mode, market info, sta
 com.smartdevice.recordactivation             # first-activation recording
 com.smartdevice.aftersale                    # after-sales service menu, silent APK installer, runs at boot
 com.Smartdevice.emanual                      # e-manual
+com.smartdevice.dailymanage                  # "Daily Manage" cleaner: force-stops and clears apps, so they cold-start
 
 # Google extras
 com.google.android.feedback
 com.google.android.marvin.talkback
 com.google.android.play.games
+com.google.android.syncadapters.calendar     # calendar sync, ~16 MB resident, nothing on a TV uses it
 com.google.android.apps.tv.dreamx            # ambient mode screensaver (see TCL quirk: switch to dreams.basic)
 
 # Needed once launcher/ replaces the stock home (see quirks above). launcherx itself is disabled by
